@@ -28,6 +28,7 @@ import optimization
 import tokenization
 import six
 import tensorflow as tf
+import time
 
 flags = tf.flags
 
@@ -1217,6 +1218,7 @@ def main(_):
     if FLAGS.do_predict:
         while True:  # we wait forever for new predict file
             if not tf.gfile.Exists(FLAGS.predict_file):
+                time.sleep(1)
                 continue
 
             eval_examples = read_squad_examples(
