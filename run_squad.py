@@ -1215,10 +1215,10 @@ def main(_):
         estimator.train(input_fn=train_input_fn, max_steps=num_train_steps)
 
     if FLAGS.do_predict:
-        while True:
-            again = input("Do you want to process the question ?").strip().lower()
-            if again != "yes":
-                break
+        while True:  # we wait forever for new predict file
+            if not os.path.exists(FLAGS.predict_file):
+                continue
+
             eval_examples = read_squad_examples(
                 input_file=FLAGS.predict_file, is_training=False)
 
@@ -1278,6 +1278,7 @@ def main(_):
                               FLAGS.n_best_size, FLAGS.max_answer_length,
                               FLAGS.do_lower_case, output_prediction_file,
                               output_nbest_file, output_null_log_odds_file)
+            os.remove(FLAGS.predict_file)
 
 
 if __name__ == "__main__":
