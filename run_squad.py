@@ -1216,7 +1216,7 @@ def main(_):
 
     if FLAGS.do_predict:
         while True:  # we wait forever for new predict file
-            if not os.path.exists(FLAGS.predict_file):
+            if not tf.gfile.Exists(FLAGS.predict_file):
                 continue
 
             eval_examples = read_squad_examples(
@@ -1278,7 +1278,7 @@ def main(_):
                               FLAGS.n_best_size, FLAGS.max_answer_length,
                               FLAGS.do_lower_case, output_prediction_file,
                               output_nbest_file, output_null_log_odds_file)
-            os.remove(FLAGS.predict_file)
+            tf.gfile.Remove(FLAGS.predict_file)
 
 
 if __name__ == "__main__":
