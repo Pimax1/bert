@@ -227,7 +227,7 @@ class InputFeatures(object):
 
 def read_squad_examples(input_file, is_training):
     """Read a SQuAD json file into a list of SquadExample."""
-    with tf.gfile.Open(input_file, "r") as reader:
+    with tf.gfile.Open(input_file, "r", encoding='utf-8') as reader:
         input_data = json.load(reader)["data"]
 
     def is_whitespace(c):
@@ -915,14 +915,14 @@ def write_predictions(all_examples, all_features, all_results, n_best_size,
         all_nbest_json[example.qas_id] = nbest_json
 
     with tf.gfile.GFile(output_prediction_file, "w") as writer:
-        writer.write(json.dumps(all_predictions, indent=4) + "\n")
+        writer.write(json.dumps(all_predictions, indent=4, ensure_ascii=False) + "\n")
 
     with tf.gfile.GFile(output_nbest_file, "w") as writer:
-        writer.write(json.dumps(all_nbest_json, indent=4) + "\n")
+        writer.write(json.dumps(all_nbest_json, indent=4, ensure_ascii=False) + "\n")
 
     if FLAGS.version_2_with_negative:
         with tf.gfile.GFile(output_null_log_odds_file, "w") as writer:
-            writer.write(json.dumps(scores_diff_json, indent=4) + "\n")
+            writer.write(json.dumps(scores_diff_json, indent=4, ensure_ascii=False) + "\n")
 
 
 def get_final_text(pred_text, orig_text, do_lower_case):
