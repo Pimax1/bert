@@ -227,7 +227,7 @@ class InputFeatures(object):
 
 def read_squad_examples(input_file, is_training):
     """Read a SQuAD json file into a list of SquadExample."""
-    with tf.gfile.Open(input_file, "r", encoding='utf-8') as reader:
+    with tf.gfile.Open(input_file, "r") as reader:
         input_data = json.load(reader)["data"]
 
     def is_whitespace(c):
